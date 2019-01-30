@@ -339,8 +339,7 @@ namespace FacebookPageCommentManager
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ReadOnly = true;
             
-            int i = 0, gridviewrowno = dataGridView1.Rows.Count;
-            for (i = 0; i < dataGridView1.Rows.Count - 1; i++)
+            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
             {
                 //link creation
                 DataGridViewLinkCell updatecell = new DataGridViewLinkCell();
@@ -370,11 +369,46 @@ namespace FacebookPageCommentManager
 
                 dataGridView1.Rows[i].Cells[8] = canreply;
 
-                progressBar1.Hide();
+            }
+            progressBar1.Hide();
+        }
+
+        private void LoadModifiedColumns()
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+            {
+                //link creation
+                DataGridViewLinkCell updatecell = new DataGridViewLinkCell();
+                updatecell.Value = loadedpostlist[i].postlink;
+                dataGridView1.Rows[i].Cells[5] = updatecell;
+                DataGridViewLinkCell inboxcell = new DataGridViewLinkCell();
+                inboxcell.Value = loadedpostlist[i].inbox;
+                dataGridView1.Rows[i].Cells[9] = inboxcell;
+
+
+                // Checkbox cell create
+                DataGridViewCheckBoxCell ishidden = new DataGridViewCheckBoxCell();
+                if (loadedpostlist[i].ishidden == "True")
+                    ishidden.Value = true;
+                else
+                {
+                    ishidden.Value = false;
+                }
+
+                dataGridView1.Rows[i].Cells[7] = ishidden;
+
+                DataGridViewCheckBoxCell canreply = new DataGridViewCheckBoxCell();
+                if (loadedpostlist[i].canreply == "True")
+                    canreply.Value = canreply.FalseValue;
+                else
+                {
+                    canreply.Value = canreply.TrueValue;
+                }
+
+                dataGridView1.Rows[i].Cells[8] = canreply;
             }
 
         }
-
 
         private async void checkedListBox1_SelectedIndexChangedAsync(object sender, EventArgs e)
         {
@@ -474,80 +508,13 @@ namespace FacebookPageCommentManager
                 if (!string.IsNullOrEmpty(textBox8.Text))
                 {
                     (dataGridView1.DataSource as DataTable).DefaultView.RowFilter = string.Format("Message LIKE '%{0}%' ", textBox8.Text);
-                    for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
-                    {
-                        //link creation
-                        DataGridViewLinkCell updatecell = new DataGridViewLinkCell();
-                        updatecell.Value = loadedpostlist[i].postlink;
-                        dataGridView1.Rows[i].Cells[5] = updatecell;
-                        DataGridViewLinkCell inboxcell = new DataGridViewLinkCell();
-                        inboxcell.Value = loadedpostlist[i].inbox;
-                        dataGridView1.Rows[i].Cells[9] = inboxcell;
-
-
-
-                        DataGridViewCheckBoxCell ishidden = new DataGridViewCheckBoxCell();
-                        if (loadedpostlist[i].ishidden == "True")
-                            ishidden.Value = true;
-                        else
-                        {
-                            ishidden.Value = false;
-                        }
-
-                        dataGridView1.Rows[i].Cells[7] = ishidden;
-
-                        DataGridViewCheckBoxCell canreply = new DataGridViewCheckBoxCell();
-                        if (loadedpostlist[i].canreply == "True")
-                            canreply.Value = canreply.FalseValue;
-                        else
-                        {
-                            canreply.Value = canreply.TrueValue;
-                        }
-
-                        dataGridView1.Rows[i].Cells[8] = canreply;
-
-                        progressBar1.Hide();
-                    }
+                    LoadModifiedColumns();
                 }
                 else
                 {
                     (dataGridView1.DataSource as DataTable).DefaultView.RowFilter = string.Empty;
-                    for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
-                    {
-                        //link creation
-                        DataGridViewLinkCell updatecell = new DataGridViewLinkCell();
-                        updatecell.Value = loadedpostlist[i].postlink;
-                        dataGridView1.Rows[i].Cells[5] = updatecell;
-                        DataGridViewLinkCell inboxcell = new DataGridViewLinkCell();
-                        inboxcell.Value = loadedpostlist[i].inbox;
-                        dataGridView1.Rows[i].Cells[9] = inboxcell;
-
-
-
-                        DataGridViewCheckBoxCell ishidden = new DataGridViewCheckBoxCell();
-                        if (loadedpostlist[i].ishidden == "True")
-                            ishidden.Value = true;
-                        else
-                        {
-                            ishidden.Value = false;
-                        }
-
-                        dataGridView1.Rows[i].Cells[7] = ishidden;
-
-                        DataGridViewCheckBoxCell canreply = new DataGridViewCheckBoxCell();
-                        if (loadedpostlist[i].canreply == "True")
-                            canreply.Value = canreply.FalseValue;
-                        else
-                        {
-                            canreply.Value = canreply.TrueValue;
-                        }
-
-                        dataGridView1.Rows[i].Cells[8] = canreply;
-
-                        progressBar1.Hide();
-                    }
+                    LoadModifiedColumns();
                 }
-
             }
             catch (Exception ex)
             {
@@ -640,36 +607,9 @@ namespace FacebookPageCommentManager
                                 {
                                     try
                                     {
-                                        //link creation
-                                        DataGridViewLinkCell updatecell = new DataGridViewLinkCell();
-                                        updatecell.Value = loadedpostlist[i].postlink;
-                                        dataGridView1.Rows[i].Cells[5] = updatecell;
-                                        DataGridViewLinkCell inboxcell = new DataGridViewLinkCell();
-                                        inboxcell.Value = loadedpostlist[i].inbox;
-                                        dataGridView1.Rows[i].Cells[9] = inboxcell;
-
-
-
-                                        DataGridViewCheckBoxCell ishidden = new DataGridViewCheckBoxCell();
-                                        if (loadedpostlist[i].ishidden == "True")
-                                            ishidden.Value = true;
-                                        else
-                                        {
-                                            ishidden.Value = false;
-                                        }
-
-                                        dataGridView1.Rows[i].Cells[7] = ishidden;
-
-                                        DataGridViewCheckBoxCell canreply = new DataGridViewCheckBoxCell();
-                                        if (loadedpostlist[i].canreply == "True")
-                                            canreply.Value = canreply.FalseValue;
-                                        else
-                                        {
-                                            canreply.Value = canreply.TrueValue;
-                                        }
-
-                                        dataGridView1.Rows[i].Cells[8] = canreply;
-                                    }catch(Exception ex)
+                                        LoadModifiedColumns();
+                                    }
+                                    catch(Exception)
                                     {
                                         //MessageBox.Show(ex.Message);
                                         continue;
@@ -1178,41 +1118,7 @@ namespace FacebookPageCommentManager
 
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            for  (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
-            {
-                //link creation
-                DataGridViewLinkCell updatecell = new DataGridViewLinkCell();
-                updatecell.Value = loadedpostlist[i].postlink;
-                dataGridView1.Rows[i].Cells[5] = updatecell;
-                DataGridViewLinkCell inboxcell = new DataGridViewLinkCell();
-                inboxcell.Value = loadedpostlist[i].inbox;
-                dataGridView1.Rows[i].Cells[9] = inboxcell;
-
-
-
-                DataGridViewCheckBoxCell ishidden = new DataGridViewCheckBoxCell();
-                if (loadedpostlist[i].ishidden == "True")
-                    ishidden.Value = true;
-                else
-                {
-                    ishidden.Value = false;
-                }
-
-                dataGridView1.Rows[i].Cells[7] = ishidden;
-
-                DataGridViewCheckBoxCell canreply = new DataGridViewCheckBoxCell();
-                if (loadedpostlist[i].canreply == "True")
-                    canreply.Value = canreply.FalseValue;
-                else
-                {
-                    canreply.Value = canreply.TrueValue;
-                }
-
-                dataGridView1.Rows[i].Cells[8] = canreply;
-
-                progressBar1.Hide();
-            }
-
+            LoadModifiedColumns();
         }
 
         // dictionary for saving post wise messages
