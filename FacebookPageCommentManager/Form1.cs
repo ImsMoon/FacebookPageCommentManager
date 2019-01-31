@@ -540,6 +540,8 @@ namespace FacebookPageCommentManager
                     AutoLikeBox.Enabled = true;
                     HideAttachmentCheckBox.Enabled = true;
                     HideLinkCheckBox.Enabled = true;
+                    DeleteAttachmentCheckBox.Enabled = true;
+                    DeleteLinksCheckBox.Enabled = true;
                 }
                 else
                 {
@@ -554,6 +556,8 @@ namespace FacebookPageCommentManager
                     AutoLikeBox.Enabled = false;
                     HideAttachmentCheckBox.Enabled = false;
                     HideLinkCheckBox.Enabled = false;
+                    DeleteAttachmentCheckBox.Enabled = false;
+                    DeleteLinksCheckBox.Enabled = false;
                 }
             }
             else
@@ -703,12 +707,12 @@ namespace FacebookPageCommentManager
                                     Thread.Sleep(500);
                                 }
 
-                                if (!string.IsNullOrEmpty(AutoDeleteBox.Text))
+                                if (!string.IsNullOrEmpty(AutoDeleteBox.Text) || DeleteAttachmentCheckBox.Checked || DeleteLinksCheckBox.Checked)
                                 {
                                     try
                                     {
                                         string message = AutoDeleteBox.Text;
-                                        if (data.replies.Contains(message))
+                                        if (data.replies.Contains(message) || data.replies == "" || rx.IsMatch(data.replies))
                                         {
                                             
                                                 try

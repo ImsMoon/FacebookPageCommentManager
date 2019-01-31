@@ -80,6 +80,8 @@
             this.HideAttachmentCheckBox = new System.Windows.Forms.CheckBox();
             this.HideLinkCheckBox = new System.Windows.Forms.CheckBox();
             this.labelStatus = new System.Windows.Forms.Label();
+            this.DeleteLinksCheckBox = new System.Windows.Forms.CheckBox();
+            this.DeleteAttachmentCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -186,7 +188,7 @@
             // AutoLikeBox
             // 
             this.AutoLikeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AutoLikeBox.Location = new System.Drawing.Point(1047, 390);
+            this.AutoLikeBox.Location = new System.Drawing.Point(1047, 377);
             this.AutoLikeBox.Multiline = true;
             this.AutoLikeBox.Name = "AutoLikeBox";
             this.AutoLikeBox.Size = new System.Drawing.Size(100, 56);
@@ -195,7 +197,7 @@
             // AutoReplyBox
             // 
             this.AutoReplyBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AutoReplyBox.Location = new System.Drawing.Point(1161, 390);
+            this.AutoReplyBox.Location = new System.Drawing.Point(1161, 377);
             this.AutoReplyBox.Multiline = true;
             this.AutoReplyBox.Name = "AutoReplyBox";
             this.AutoReplyBox.Size = new System.Drawing.Size(112, 56);
@@ -204,7 +206,7 @@
             // AutoHideBox
             // 
             this.AutoHideBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AutoHideBox.Location = new System.Drawing.Point(1047, 475);
+            this.AutoHideBox.Location = new System.Drawing.Point(1047, 462);
             this.AutoHideBox.Multiline = true;
             this.AutoHideBox.Name = "AutoHideBox";
             this.AutoHideBox.Size = new System.Drawing.Size(100, 56);
@@ -213,7 +215,7 @@
             // AutoDeleteBox
             // 
             this.AutoDeleteBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AutoDeleteBox.Location = new System.Drawing.Point(1161, 475);
+            this.AutoDeleteBox.Location = new System.Drawing.Point(1161, 462);
             this.AutoDeleteBox.Multiline = true;
             this.AutoDeleteBox.Name = "AutoDeleteBox";
             this.AutoDeleteBox.Size = new System.Drawing.Size(112, 56);
@@ -222,7 +224,7 @@
             // AutoBlockBox
             // 
             this.AutoBlockBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AutoBlockBox.Location = new System.Drawing.Point(1047, 565);
+            this.AutoBlockBox.Location = new System.Drawing.Point(1047, 540);
             this.AutoBlockBox.Multiline = true;
             this.AutoBlockBox.Name = "AutoBlockBox";
             this.AutoBlockBox.Size = new System.Drawing.Size(100, 56);
@@ -231,7 +233,7 @@
             // AutoSendMessageBox
             // 
             this.AutoSendMessageBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AutoSendMessageBox.Location = new System.Drawing.Point(1044, 305);
+            this.AutoSendMessageBox.Location = new System.Drawing.Point(1044, 296);
             this.AutoSendMessageBox.Multiline = true;
             this.AutoSendMessageBox.Name = "AutoSendMessageBox";
             this.AutoSendMessageBox.Size = new System.Drawing.Size(194, 56);
@@ -402,7 +404,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(1044, 374);
+            this.label4.Location = new System.Drawing.Point(1044, 361);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(99, 13);
             this.label4.TabIndex = 19;
@@ -412,7 +414,7 @@
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(1158, 374);
+            this.label5.Location = new System.Drawing.Point(1158, 361);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(106, 13);
             this.label5.TabIndex = 20;
@@ -422,7 +424,7 @@
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(1044, 459);
+            this.label6.Location = new System.Drawing.Point(1044, 446);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(101, 13);
             this.label6.TabIndex = 21;
@@ -432,7 +434,7 @@
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(1158, 459);
+            this.label7.Location = new System.Drawing.Point(1158, 446);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(110, 13);
             this.label7.TabIndex = 22;
@@ -442,7 +444,7 @@
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(1044, 549);
+            this.label8.Location = new System.Drawing.Point(1044, 524);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(95, 13);
             this.label8.TabIndex = 23;
@@ -491,7 +493,7 @@
             this.btnAddMessage.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
             this.btnAddMessage.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.btnAddMessage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddMessage.Location = new System.Drawing.Point(1241, 317);
+            this.btnAddMessage.Location = new System.Drawing.Point(1241, 307);
             this.btnAddMessage.Margin = new System.Windows.Forms.Padding(0);
             this.btnAddMessage.Name = "btnAddMessage";
             this.btnAddMessage.Size = new System.Drawing.Size(45, 35);
@@ -502,10 +504,9 @@
             // 
             // HideAttachmentCheckBox
             // 
-            this.HideAttachmentCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.HideAttachmentCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.HideAttachmentCheckBox.AutoSize = true;
-            this.HideAttachmentCheckBox.Location = new System.Drawing.Point(1161, 565);
+            this.HideAttachmentCheckBox.Location = new System.Drawing.Point(633, 629);
             this.HideAttachmentCheckBox.Name = "HideAttachmentCheckBox";
             this.HideAttachmentCheckBox.Size = new System.Drawing.Size(110, 17);
             this.HideAttachmentCheckBox.TabIndex = 30;
@@ -514,10 +515,9 @@
             // 
             // HideLinkCheckBox
             // 
-            this.HideLinkCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.HideLinkCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.HideLinkCheckBox.AutoSize = true;
-            this.HideLinkCheckBox.Location = new System.Drawing.Point(1161, 588);
+            this.HideLinkCheckBox.Location = new System.Drawing.Point(749, 629);
             this.HideLinkCheckBox.Name = "HideLinkCheckBox";
             this.HideLinkCheckBox.Size = new System.Drawing.Size(76, 17);
             this.HideLinkCheckBox.TabIndex = 31;
@@ -536,11 +536,35 @@
             this.labelStatus.Text = "Status: Connected";
             this.labelStatus.Click += new System.EventHandler(this.labelStatus_Click);
             // 
+            // DeleteLinksCheckBox
+            // 
+            this.DeleteLinksCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.DeleteLinksCheckBox.AutoSize = true;
+            this.DeleteLinksCheckBox.Location = new System.Drawing.Point(956, 629);
+            this.DeleteLinksCheckBox.Name = "DeleteLinksCheckBox";
+            this.DeleteLinksCheckBox.Size = new System.Drawing.Size(85, 17);
+            this.DeleteLinksCheckBox.TabIndex = 34;
+            this.DeleteLinksCheckBox.Text = "Delete Links";
+            this.DeleteLinksCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // DeleteAttachmentCheckBox
+            // 
+            this.DeleteAttachmentCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.DeleteAttachmentCheckBox.AutoSize = true;
+            this.DeleteAttachmentCheckBox.Location = new System.Drawing.Point(831, 629);
+            this.DeleteAttachmentCheckBox.Name = "DeleteAttachmentCheckBox";
+            this.DeleteAttachmentCheckBox.Size = new System.Drawing.Size(119, 17);
+            this.DeleteAttachmentCheckBox.TabIndex = 33;
+            this.DeleteAttachmentCheckBox.Text = "Delete Attachments";
+            this.DeleteAttachmentCheckBox.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1289, 694);
+            this.Controls.Add(this.DeleteLinksCheckBox);
+            this.Controls.Add(this.DeleteAttachmentCheckBox);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.HideLinkCheckBox);
             this.Controls.Add(this.HideAttachmentCheckBox);
@@ -635,6 +659,8 @@
         private System.Windows.Forms.CheckBox HideAttachmentCheckBox;
         private System.Windows.Forms.CheckBox HideLinkCheckBox;
         private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.CheckBox DeleteLinksCheckBox;
+        private System.Windows.Forms.CheckBox DeleteAttachmentCheckBox;
     }
 }
 
