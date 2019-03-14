@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace FacebookPageCommentManager
     public partial class Form1 : Form
     {
         private string Profile_Access_token = null;
-        private const string AppId = "176295779966540";
+        private const string AppId = /*"255794081973020"; //*/"176295779966540";
         private const string ExtendedPermissions = "read_page_mailboxes";
         private string _accessToken;
         private string profilename = null;
@@ -170,9 +171,9 @@ namespace FacebookPageCommentManager
             }
         }
 
-        private async Task<List<PostListView>> getpostlist(string CurrentpageAccesstoken,string SelectedPageId,string CurrentPageName,string rule)
+        private async Task<List<PostListView>> getpostlist(string CurrentpageAccesstoken,string SelectedPageId,string CurrentPageName,string IsActive)
         {
-            if (rule != "Timer")
+            if (IsActive != "Timer")
             {
                 progressBar1.Show();
                 label1.Text = "Loading..";
@@ -198,7 +199,7 @@ namespace FacebookPageCommentManager
             }
             var AllPostData = AllPostJson.posts.data;
 
-            if (rule == "Timer")
+            if (IsActive == "Timer")
             {
                 
             }
@@ -217,15 +218,8 @@ namespace FacebookPageCommentManager
             {
                 dynamic SinglePostComments;
                 try
-                {
-                    if (rule == "Timer")
-                    {
-                        SinglePostComments = await FbClient.GetTaskAsync(posts.id + "/comments?fields=is_hidden,from,permalink_url,message,comment_count,private_reply_conversation,can_reply_privately,created_time&summary=1&order=reverse_chronological&limit=2");
-                    }
-                    else
-                    {
-                        SinglePostComments = await FbClient.GetTaskAsync(posts.id + "/comments?fields=is_hidden,from,permalink_url,message,comment_count,private_reply_conversation,can_reply_privately,created_time&summary=1&order=reverse_chronological&limit=8");
-                    }
+                {                    
+                     SinglePostComments = await FbClient.GetTaskAsync(posts.id + "/comments?fields=is_hidden,attachment,from,permalink_url,message,comment_count,comments{attachment,from,permalink_url,message,comment_count,created_time},private_reply_conversation,can_reply_privately,created_time&summary=1&order=reverse_chronological&limit=8");
                 }
                 catch (Exception x)
                 {
@@ -237,53 +231,15 @@ namespace FacebookPageCommentManager
                     }
                     return null;
                 }
+                
                 try
                 {
-
                     var postcomments = SinglePostComments.data;
+                    listofposts.AddRange(GetDataFromJson(postcomments,posts,CurrentPageName,IsActive,false));
 
-                    foreach (var comments in postcomments)
+                    if (IsActive != "Timer")
                     {
-                        PostListView postdata = new PostListView();
-                        postdata.postname = posts.message;
-                        postdata.pagename = CurrentPageName;
-                        postdata.createdtime = DateTime.Parse(comments.created_time);
-                        try
-                        {
-                            postdata.fromname = comments.from.name;
-                        }
-                        catch (Exception)
-                        {
-                            postdata.fromname = "";
-                        }
-                        postdata.postid = comments.id.ToString();
-                        postdata.replies = comments.message;
-                        try
-                        {
-                            postdata.postlink = comments.permalink_url;
-                        }
-                        catch (Exception)
-                        {
-                            postdata.postlink = "www.facebook.com/" + CurrentPageName + "/posts/" + posts.id;
-                        }
-                        postdata.ishidden = comments.is_hidden.ToString();
-                        postdata.repliescount = comments.comment_count.ToString();
-                        postdata.canreply = comments.can_reply_privately.ToString();
-                        try
-                        {
-                            postdata.inbox = "www.facebook.com/" + comments.private_reply_conversation.link;
-                        }
-                        catch (Exception)
-                        {
-                            postdata.inbox = "";
-                        }
-
-                        listofposts.Add(postdata);
-
-                        if (rule != "Timer")
-                        {
-                            label1.Text = listofposts.Count + " Loading...";
-                        }
+                        label1.Text = listofposts.Count + " Loading...";
                     }
                 }
                 catch (Exception)
@@ -296,6 +252,94 @@ namespace FacebookPageCommentManager
             labelStatus.ForeColor = Color.Lime;
             return listofposts;
         }
+
+        List<PostListView> listofpostsandreplies = new List<PostListView>();
+
+        private List<PostListView> GetDataFromJson(dynamic postcomments, dynamic posts, string CurrentPageName,string IsActive,bool IsReplies)
+        {
+            if (!IsReplies)
+            {
+                listofpostsandreplies = new List<PostListView>();
+            }
+            foreach (var comments in postcomments)
+            {
+                PostListView postdata = new PostListView();
+                postdata.postname = posts.message;
+                postdata.pagename = CurrentPageName;
+                try
+                {
+                    var attachment = comments.attachment;
+                    if (attachment != null)
+                    {
+                        postdata.HaveAttachment = true;
+                    }
+                    else
+                    {
+                        postdata.HaveAttachment = false;
+                    }
+                }
+                catch (Exception)
+                {
+                    postdata.HaveAttachment = false;
+                }
+                postdata.createdtime = DateTime.Parse(comments.created_time);
+                try
+                {
+                    postdata.fromname = comments.from.name;
+                }
+                catch (Exception)
+                {
+                    postdata.fromname = "";
+                }
+                try
+                {
+                    postdata.fromid = comments.from.id;
+                }catch(Exception)
+                {
+                    postdata.fromid = "";
+                }
+                postdata.postid = comments.id.ToString();
+                postdata.replies = comments.message;
+                try
+                {
+                    postdata.postlink = comments.permalink_url;
+                }
+                catch (Exception)
+                {
+                    postdata.postlink = "www.facebook.com/" + CurrentPageName + "/posts/" + posts.id;
+                }
+                postdata.repliescount = comments.comment_count.ToString();
+
+                if (IsReplies)
+                    postdata.ishidden = "FromReplies";
+                else
+                    postdata.ishidden = "FromComments";
+
+                //postdata.canreply = comments.can_reply_privately.ToString();
+                //try
+                //{
+                //    postdata.inbox = "www.facebook.com/" + comments.private_reply_conversation.link;
+                //}
+                //catch (Exception)
+                //{
+                //    postdata.inbox = "";
+                //}
+
+
+
+                listofpostsandreplies.Add(postdata);
+
+                // Saving Comment Replies data
+
+                if (int.Parse(postdata.repliescount) > 0 && IsActive == "Timer")
+                {                   
+                    var CommentReplies = comments.comments.data;
+                    GetDataFromJson(CommentReplies,posts,CurrentPageName,"Timer",true);
+                }                
+            }
+            return listofpostsandreplies;
+        }
+
 
         public void datagridload(List<PostListView> allcomments)
         {
@@ -314,9 +358,9 @@ namespace FacebookPageCommentManager
             Pagedt.Columns.Add("From Name");//4
             Pagedt.Columns.Add("Created Time");//5
             Pagedt.Columns.Add("Replies");//6
-            Pagedt.Columns.Add("Is Hidden");//7
-            Pagedt.Columns.Add("Can Send Message?");//8
-            Pagedt.Columns.Add("Inbox");//9
+            //Pagedt.Columns.Add("Is Hidden");//7
+            //Pagedt.Columns.Add("Can Send Message?");//8
+            //Pagedt.Columns.Add("Inbox");//9
             Pagedt.Columns.Add("Postid");//10
             Pagedt.Columns.Add("CommentLink");//11
           
@@ -324,7 +368,7 @@ namespace FacebookPageCommentManager
             foreach (var item in allcomments)
             {
                  Pagedt.Rows.Add(serial,item.pagename,item.postname,item.replies,item.fromname,item.createdtime,
-                     item.repliescount,item.ishidden,item.canreply,item.inbox,item.postid,item.postlink);
+                     item.repliescount,item.postid,item.postlink);
                 //btn.Text = serial.ToString();
                 serial--;
             }
@@ -333,156 +377,119 @@ namespace FacebookPageCommentManager
 
             dataGridView1.Columns["Postid"].Visible = false;
             dataGridView1.Columns["CommentLink"].Visible = false;
-            dataGridView1.Columns["Inbox"].DefaultCellStyle.ForeColor = Color.Blue;
+            //dataGridView1.Columns["Inbox"].DefaultCellStyle.ForeColor = Color.Blue;
 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ReadOnly = true;
             
-            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 //link creation
                 DataGridViewLinkCell updatecell = new DataGridViewLinkCell();
                 updatecell.Value = allcomments[i].postlink;
                 dataGridView1.Rows[i].Cells[5] = updatecell;
-                DataGridViewLinkCell inboxcell = new DataGridViewLinkCell();
-                inboxcell.Value = allcomments[i].inbox;
-                dataGridView1.Rows[i].Cells[9] = inboxcell;
-
-                DataGridViewCheckBoxCell ishidden = new DataGridViewCheckBoxCell();
-                if (allcomments[i].ishidden == "True")
-                    ishidden.Value = true;
-                else
-                {
-                    ishidden.Value = false;
-                }
-
-                dataGridView1.Rows[i].Cells[7] = ishidden;
-
-                DataGridViewCheckBoxCell canreply = new DataGridViewCheckBoxCell();
-                if (allcomments[i].canreply == "True")
-                    canreply.Value = canreply.FalseValue;
-                else
-                {
-                    canreply.Value = canreply.TrueValue;
-                }
-
-                dataGridView1.Rows[i].Cells[8] = canreply;
-
             }
             progressBar1.Hide();
         }
 
         private void LoadModifiedColumns()
         {
-            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 //link creation
                 DataGridViewLinkCell updatecell = new DataGridViewLinkCell();
                 updatecell.Value = loadedpostlist[i].postlink;
                 dataGridView1.Rows[i].Cells[5] = updatecell;
-                DataGridViewLinkCell inboxcell = new DataGridViewLinkCell();
-                inboxcell.Value = loadedpostlist[i].inbox;
-                dataGridView1.Rows[i].Cells[9] = inboxcell;
-
-
-                // Checkbox cell create
-                DataGridViewCheckBoxCell ishidden = new DataGridViewCheckBoxCell();
-                if (loadedpostlist[i].ishidden == "True")
-                    ishidden.Value = true;
-                else
-                {
-                    ishidden.Value = false;
-                }
-
-                dataGridView1.Rows[i].Cells[7] = ishidden;
-
-                DataGridViewCheckBoxCell canreply = new DataGridViewCheckBoxCell();
-                if (loadedpostlist[i].canreply == "True")
-                    canreply.Value = canreply.FalseValue;
-                else
-                {
-                    canreply.Value = canreply.TrueValue;
-                }
-
-                dataGridView1.Rows[i].Cells[8] = canreply;
             }
 
         }
 
         private async void checkedListBox1_SelectedIndexChangedAsync(object sender, EventArgs e)
         {
-            if (checkedListBox1.GetItemCheckState(checkedListBox1.SelectedIndex) == CheckState.Checked)
+            try
             {
-                Cursor.Current = Cursors.WaitCursor;
-                progressBar1.Show();
-                var fb = new FacebookClient();
-                fb.AccessToken = Profile_Access_token;
-                AutoLikeBox.Clear();
-                try
+                if (checkedListBox1.GetItemCheckState(checkedListBox1.SelectedIndex) == CheckState.Checked)
                 {
-                    //start getting selected page access token
-                    string CurrentPageId = checkedListBox1.SelectedValue.ToString();
-                    string CurrentPageName = checkedListBox1.Text;// get the selected text from checklistbox
-
-                    currPagename = CurrentPageName;
-                    currPageid = CurrentPageId;
-                   
-                    if (CurrentPageId != "0")
+                    Cursor.Current = Cursors.WaitCursor;
+                    progressBar1.Show();
+                    var fb = new FacebookClient();
+                    fb.AccessToken = Profile_Access_token;
+                    AutoLikeBox.Clear();
+                    try
                     {
-                        dynamic CurrentPageTokenCall = fb.Get(CurrentPageId + "?fields=access_token");
-                        string CurrentpageAccesstoken = CurrentPageTokenCall.access_token;
-                        currPageAccessToken = CurrentpageAccesstoken;
-                        List<PostListView> AllConversationViewList = new List<PostListView>();
-                        AllConversationViewList =await getpostlist(CurrentpageAccesstoken,CurrentPageId, CurrentPageName,"");
-                        AllConversationViewList.Sort((y, x) => -1 * DateTime.Compare(y.createdtime, x.createdtime));
-                       
-                        label1.Text = AllConversationViewList.Count + " New Comments";
-                        datagridload(AllConversationViewList);
-                        loadedpostlist = AllConversationViewList;///
-                        CompleteLoadingTime = AllConversationViewList[0].createdtime;
-                        //. for loading post list in listbox
+                        //start getting selected page access token
+                        string CurrentPageId = checkedListBox1.SelectedValue.ToString();
+                        string CurrentPageName = checkedListBox1.Text;// get the selected text from checklistbox
 
-                        try
+                        currPagename = CurrentPageName;
+                        currPageid = CurrentPageId;
+
+                        if (CurrentPageId != "0")
                         {
-                            PostlistBox.DataSource = postlist;
-                            PostlistBox.ValueMember = "id";
-                            PostlistBox.DisplayMember = "Name";
-                            PostlistBox.SelectedIndex = -1;
-                        }catch(Exception)
-                        { }
-                        /// end section
-                       
+                            dynamic CurrentPageTokenCall = fb.Get(CurrentPageId + "?fields=access_token");
+                            string CurrentpageAccesstoken = CurrentPageTokenCall.access_token;
+                            currPageAccessToken = CurrentpageAccesstoken;
+                            List<PostListView> AllConversationViewList = new List<PostListView>();
+                            AllConversationViewList = await getpostlist(CurrentpageAccesstoken, CurrentPageId, CurrentPageName, "");
+                            AllConversationViewList.Sort((y, x) => -1 * DateTime.Compare(y.createdtime, x.createdtime));
+
+                            label1.Text = AllConversationViewList.Count + " New Comments";
+                            datagridload(AllConversationViewList);
+                            loadedpostlist = AllConversationViewList;///
+                            try
+                            {
+                                CompleteLoadingTime = AllConversationViewList[0].createdtime;
+                            }
+                            catch (Exception)
+                            {
+                                CompleteLoadingTime = DateTime.Now;
+                            }
+                            //. for loading post list in listbox
+
+                            try
+                            {
+                                PostlistBox.DataSource = postlist;
+                                PostlistBox.ValueMember = "id";
+                                PostlistBox.DisplayMember = "Name";
+                                PostlistBox.SelectedIndex = -1;
+                            }
+                            catch (Exception)
+                            { }
+                            /// end section
+
+                        }
+                        else
+                        {
+                            AutoLikeBox.Clear();
+
+                            dataGridView1.DataSource = null;
+                            dataGridView1.Rows.Clear();
+                            dataGridView1.Refresh();
+                        }
                     }
-                    else
+
+                    catch (Exception)
                     {
-                        AutoLikeBox.Clear();
 
-                        dataGridView1.DataSource = null;
-                        dataGridView1.Rows.Clear();
-                        dataGridView1.Refresh();
                     }
-                }
+                    try
+                    {
+                        string path = Assembly.GetExecutingAssembly().Location;
+                        path = Path.GetDirectoryName(path);
+                        path = Path.Combine(path, "notifyTune.wav");
+                        System.Media.SoundPlayer player = new System.Media.SoundPlayer(path);
 
-                catch (Exception)
-                {
+                        //player.SoundLocation = @"C:\Users\imtiyaz\Downloads\Music\notifyTune.wav";
+                        player.Play();
+                    }
+                    catch
+                    {
 
-                }
-                try
-                {
-                    string path = Assembly.GetExecutingAssembly().Location;
-                    path = Path.GetDirectoryName(path);
-                    path = Path.Combine(path, "notifyTune.wav");
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(path);
-
-                    //player.SoundLocation = @"C:\Users\imtiyaz\Downloads\Music\notifyTune.wav";
-                    player.Play();
-                }
-                catch
-                {
-
+                    }
                 }
             }
+            catch (Exception) { }
             Cursor.Current = Cursors.Default;
             progressBar1.Hide();
         }
@@ -541,7 +548,7 @@ namespace FacebookPageCommentManager
                     HideAttachmentCheckBox.Enabled = true;
                     HideLinkCheckBox.Enabled = true;
                     DeleteAttachmentCheckBox.Enabled = true;
-                    DeleteLinksCheckBox.Enabled = true;
+                    DeleteLinkCheckBox.Enabled = true;
                 }
                 else
                 {
@@ -557,7 +564,7 @@ namespace FacebookPageCommentManager
                     HideAttachmentCheckBox.Enabled = false;
                     HideLinkCheckBox.Enabled = false;
                     DeleteAttachmentCheckBox.Enabled = false;
-                    DeleteLinksCheckBox.Enabled = false;
+                    DeleteLinkCheckBox.Enabled = false;
                 }
             }
             else
@@ -572,7 +579,7 @@ namespace FacebookPageCommentManager
         {
             if (loadedpostlist.Count >0)
             {
-                Regex rx = new Regex(@"([(http|ftp|https):\/\/][\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)");
+                //Regex rx = new Regex(@"([(http|ftp|https):\/\/][\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)");
                 timer1.Stop();
                 List<PostListView> isupdate = new List<PostListView>();
                 
@@ -585,7 +592,7 @@ namespace FacebookPageCommentManager
                     {
                         foreach (var data in isupdate)
                         {
-                            if (data.createdtime > CompleteLoadingTime && data.postid != dataGridView1.Rows[0].Cells[10].Value.ToString())
+                            if (data.createdtime > CompleteLoadingTime && data.postid != dataGridView1.Rows[0].Cells[7].Value.ToString())
                             {
                                 DataRow newRow = Pagedt.NewRow();
                                 newRow["Serial"] = dataGridView1.Rows.Count+1;
@@ -594,32 +601,22 @@ namespace FacebookPageCommentManager
                                 newRow["Message"] = data.replies;
                                 newRow["From Name"] = data.fromname;
                                 newRow["Created Time"] = data.createdtime;
-                                newRow["Replies"] = data.repliescount;
-                                newRow["Is Hidden"] = data.ishidden;
-                                newRow["Can Send Message?"] = data.canreply;
-                                newRow["Inbox"] = data.inbox;
+                                newRow["Replies"] = data.repliescount;                               
                                 newRow["Postid"] = data.postid;
                                 newRow["CommentLink"] = data.postlink;
 
                                 Pagedt.Rows.InsertAt(newRow,0);
                               
                                 dataGridView1.Rows[0].DefaultCellStyle.Font = new Font(DataGridView.DefaultFont, FontStyle.Bold);
-                                //Pagedt.Rows.Add(dataGridView1.Rows.Count, data.pagename, data.postname, data.replies,
-                                //    data.fromname, data.createdtime, data.repliescount, data.ishidden, data.canreply, data.inbox, data.postid, data.postlink);
-
-                                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                                
+                                
+                                try
                                 {
-                                    try
-                                    {
-                                        LoadModifiedColumns();
-                                    }
-                                    catch(Exception)
-                                    {
-                                        //MessageBox.Show(ex.Message);
-                                        continue;
-                                    }
-
+                                    LoadModifiedColumns();
                                 }
+                                catch(Exception)
+                                {}
+                                
 
                                 var fb = new FacebookClient
                                 {
@@ -628,24 +625,18 @@ namespace FacebookPageCommentManager
 
                                 if (!string.IsNullOrEmpty(AutoLikeBox.Text)|| AutoLikeBox.Text == "*")
                                 {
-                                    
-                                    
                                     try
                                     {
-                                       
-                                            try
-                                            {
-                                                fb.Post(data.postid + "/likes", null);
-                                            }
-                                            catch (Exception)
-                                            {                                                
-                                                continue;
-                                            }
+                                        try
+                                        {
+                                            fb.Post(data.postid + "/likes", null);
+                                        }
+                                        catch (Exception)
+                                        {                                                
+                                            continue;
+                                        }
                                         
-                                    }catch
-                                    {
-
-                                    }
+                                    }catch{}
                                   }
 
                                 if (!string.IsNullOrEmpty(AutoReplyBox.Text))
@@ -665,8 +656,7 @@ namespace FacebookPageCommentManager
                                             catch (Exception)
                                             {
                                                 continue;
-                                            }
-                                        
+                                            }                                        
                                     }
                                     catch
                                     {
@@ -678,26 +668,25 @@ namespace FacebookPageCommentManager
                                 if (!string.IsNullOrEmpty(AutoHideBox.Text) || HideAttachmentCheckBox.Checked || HideLinkCheckBox.Checked)
                                 {
                                     try
-                                    {
-                                          
+                                    {                                          
                                         string message = AutoHideBox.Text;
-                                        if (data.replies.Contains(message) || data.replies == "" || rx.IsMatch(data.replies))
+                                        if (data.replies.Contains(message) || data.HaveAttachment == true)
                                         {                                            
-                                                try
-                                                {
-                                                    bool ishidden = true;
-                                                    var msgbody = new Dictionary<string, object>
-                                                        {
-                                                            {"is_hidden",ishidden}
-                                                        };
+                                            try
+                                            {
+                                                bool ishidden = true;
+                                                var msgbody = new Dictionary<string, object>
+                                                    {
+                                                        {"is_hidden",ishidden}
+                                                    };
 
-                                                    fb.Post(data.postid, msgbody);
-                                                }
-                                                catch (Exception)
-                                                {
-                                                    continue;
-                                                }
-                                            
+                                                fb.Post(data.postid, msgbody);
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                MessageBox.Show(ex.Message);
+                                                continue;
+                                            }                                            
                                         }
                                     }
                                     catch
@@ -707,23 +696,23 @@ namespace FacebookPageCommentManager
                                     Thread.Sleep(500);
                                 }
 
-                                if (!string.IsNullOrEmpty(AutoDeleteBox.Text) || DeleteAttachmentCheckBox.Checked || DeleteLinksCheckBox.Checked)
+                                if (!string.IsNullOrEmpty(AutoDeleteBox.Text) || DeleteAttachmentCheckBox.Checked || DeleteLinkCheckBox.Checked)
                                 {
                                     try
                                     {
                                         string message = AutoDeleteBox.Text;
-                                        if (data.replies.Contains(message) || data.replies == "" || rx.IsMatch(data.replies))
+                                        if (data.replies.Contains(message) || data.HaveAttachment == true)
                                         {
                                             
-                                                try
-                                                {
-                                                    fb.Delete(data.postid);
-                                                }
-                                                catch (Exception)
-                                                {
-                                                    continue;
-                                                }
-                                            
+                                            try
+                                            {
+                                                fb.Delete(data.postid);
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                MessageBox.Show(ex.Message);
+                                                continue;
+                                            }                                            
                                         }
                                     }
                                     catch
@@ -733,7 +722,47 @@ namespace FacebookPageCommentManager
                                     Thread.Sleep(500);
                                 }
 
-                                if (PostwiseMesaages.Count > 0 )
+                                ///TODO-- Block User.. from name /id ashe na tai kaj korche na 
+
+                                //if (!string.IsNullOrEmpty(AutoBlockBox.Text))
+                                //{
+                                //    string BlockSign = AutoBlockBox.Text;
+                                //    if (data.replies.Contains(BlockSign))
+                                //    {
+                                //        try
+                                //        {
+                                //            var BlockUser = new Dictionary<string, object>
+                                //                    {
+                                //                        { "uid",data.fromid}
+                                //                    };
+                                //            fb.Delete(currPageid + "/blocked", BlockUser);
+                                //        }
+                                //        catch (Exception)
+                                //        {
+
+                                //            throw;
+                                //        }
+                                //    }
+                                //}
+
+                                bool IsSendingRepliesChecked;
+
+                                if (SendinrepliescheckBox.Checked)
+                                {
+                                    IsSendingRepliesChecked = true;
+                                }
+                                else if (data.ishidden == "FromReplies")
+                                {
+                                    IsSendingRepliesChecked = false;
+                                }
+                                else
+                                {
+                                    IsSendingRepliesChecked = true;
+                                }
+
+
+
+                                if (PostwiseMesaages.Count > 0 && IsSendingRepliesChecked)
                                 {
                                     try
                                     {
@@ -823,9 +852,6 @@ namespace FacebookPageCommentManager
             
             timer1.Start();
         }
-
-       
-
 
         private void likeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1138,8 +1164,9 @@ namespace FacebookPageCommentManager
             tip.SetToolTip(PostlistBox,Text);
 
             //string postid = PostlistBox.SelectedValue.ToString();
-            List<PostMsg> ListOfPostMsg = PostMsgDbAccess.GetMsg();
-            PostwiseMesaages = ListOfPostMsg.ToDictionary(x => x.PostId, x => x.Message);
+            // Mongo DB code portion
+            //List<PostMsg> ListOfPostMsg = PostMsgDbAccess.GetMsg();
+            //PostwiseMesaages = ListOfPostMsg.ToDictionary(x => x.PostId, x => x.Message);
 
             if (PostwiseMesaages.Count > 0)
             {
@@ -1160,7 +1187,7 @@ namespace FacebookPageCommentManager
                     PostId = PostlistBox.Text,
                     Message = AutoSendMessageBox.Text
                 };
-                PostMsgDbAccess.Update(pm);
+                //PostMsgDbAccess.Update(pm);//MongoDB update
                 PostwiseMesaages[PostlistBox.Text] = AutoSendMessageBox.Text;
             }else
             {
@@ -1169,12 +1196,12 @@ namespace FacebookPageCommentManager
                     PostId = PostlistBox.Text,
                     Message = AutoSendMessageBox.Text
                 };
-                PostMsgDbAccess.Create(pm);
+                //PostMsgDbAccess.Create(pm);// MongoDb create
                 PostwiseMesaages.Add(PostlistBox.Text, AutoSendMessageBox.Text);
             }
         }
 
-        private void labelStatus_Click(object sender, EventArgs e)
+        private void LabelStatus_Click(object sender, EventArgs e)
         {
             ConnectionMonitor cm = new ConnectionMonitor(cnnectionStatus);
             cm.Show();
@@ -1183,6 +1210,21 @@ namespace FacebookPageCommentManager
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
 
+        }
+
+        private void ClearLoginCacheToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start(new ProcessStartInfo("rundll32.exe")
+            {
+                Arguments = "InetCpl.cpl,ClearMyTracksByProcess 2",
+                WindowStyle = ProcessWindowStyle.Hidden
+            });
+
+            Process.Start(new ProcessStartInfo("rundll32.exe")
+            {
+                Arguments = "InetCpl.cpl,ClearMyTracksByProcess 8",
+                WindowStyle = ProcessWindowStyle.Hidden
+            });
         }
     }
 } 

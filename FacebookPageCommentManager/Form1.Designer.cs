@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -61,6 +64,7 @@
             this.exportDataToHTMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.minimizeToSystemtrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearLoginCacheToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutUsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
@@ -75,30 +79,52 @@
             this.label9 = new System.Windows.Forms.Label();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.PostlistBox = new System.Windows.Forms.ListBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.btnAddMessage = new System.Windows.Forms.Button();
             this.HideAttachmentCheckBox = new System.Windows.Forms.CheckBox();
             this.HideLinkCheckBox = new System.Windows.Forms.CheckBox();
             this.labelStatus = new System.Windows.Forms.Label();
-            this.DeleteLinksCheckBox = new System.Windows.Forms.CheckBox();
+            this.DeleteLinkCheckBox = new System.Windows.Forms.CheckBox();
             this.DeleteAttachmentCheckBox = new System.Windows.Forms.CheckBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.SendinrepliescheckBox = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Silver;
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 22);
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 27);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.dataGridView1.RowHeadersVisible = false;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Silver;
+            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridView1.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(1038, 601);
+            this.dataGridView1.Size = new System.Drawing.Size(810, 601);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
@@ -179,7 +205,7 @@
             // 
             this.checkedListBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(1047, 27);
+            this.checkedListBox1.Location = new System.Drawing.Point(816, 53);
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(214, 94);
             this.checkedListBox1.TabIndex = 3;
@@ -188,55 +214,56 @@
             // AutoLikeBox
             // 
             this.AutoLikeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AutoLikeBox.Location = new System.Drawing.Point(1047, 377);
+            this.AutoLikeBox.Location = new System.Drawing.Point(817, 170);
             this.AutoLikeBox.Multiline = true;
             this.AutoLikeBox.Name = "AutoLikeBox";
-            this.AutoLikeBox.Size = new System.Drawing.Size(100, 56);
+            this.AutoLikeBox.Size = new System.Drawing.Size(214, 54);
             this.AutoLikeBox.TabIndex = 4;
             // 
             // AutoReplyBox
             // 
             this.AutoReplyBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AutoReplyBox.Location = new System.Drawing.Point(1161, 377);
+            this.AutoReplyBox.Location = new System.Drawing.Point(816, 318);
             this.AutoReplyBox.Multiline = true;
             this.AutoReplyBox.Name = "AutoReplyBox";
-            this.AutoReplyBox.Size = new System.Drawing.Size(112, 56);
+            this.AutoReplyBox.Size = new System.Drawing.Size(214, 56);
             this.AutoReplyBox.TabIndex = 5;
             // 
             // AutoHideBox
             // 
             this.AutoHideBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AutoHideBox.Location = new System.Drawing.Point(1047, 462);
+            this.AutoHideBox.Location = new System.Drawing.Point(817, 243);
             this.AutoHideBox.Multiline = true;
             this.AutoHideBox.Name = "AutoHideBox";
-            this.AutoHideBox.Size = new System.Drawing.Size(100, 56);
+            this.AutoHideBox.Size = new System.Drawing.Size(213, 56);
             this.AutoHideBox.TabIndex = 6;
             // 
             // AutoDeleteBox
             // 
             this.AutoDeleteBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AutoDeleteBox.Location = new System.Drawing.Point(1161, 462);
+            this.AutoDeleteBox.Location = new System.Drawing.Point(816, 392);
             this.AutoDeleteBox.Multiline = true;
             this.AutoDeleteBox.Name = "AutoDeleteBox";
-            this.AutoDeleteBox.Size = new System.Drawing.Size(112, 56);
+            this.AutoDeleteBox.Size = new System.Drawing.Size(214, 56);
             this.AutoDeleteBox.TabIndex = 7;
             // 
             // AutoBlockBox
             // 
             this.AutoBlockBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AutoBlockBox.Location = new System.Drawing.Point(1047, 540);
+            this.AutoBlockBox.Location = new System.Drawing.Point(816, 468);
             this.AutoBlockBox.Multiline = true;
             this.AutoBlockBox.Name = "AutoBlockBox";
-            this.AutoBlockBox.Size = new System.Drawing.Size(100, 56);
+            this.AutoBlockBox.Size = new System.Drawing.Size(213, 56);
             this.AutoBlockBox.TabIndex = 8;
+            this.AutoBlockBox.Visible = false;
             // 
             // AutoSendMessageBox
             // 
             this.AutoSendMessageBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AutoSendMessageBox.Location = new System.Drawing.Point(1044, 296);
+            this.AutoSendMessageBox.Location = new System.Drawing.Point(6, 220);
             this.AutoSendMessageBox.Multiline = true;
             this.AutoSendMessageBox.Name = "AutoSendMessageBox";
-            this.AutoSendMessageBox.Size = new System.Drawing.Size(194, 56);
+            this.AutoSendMessageBox.Size = new System.Drawing.Size(221, 56);
             this.AutoSendMessageBox.TabIndex = 9;
             // 
             // textBox8
@@ -343,15 +370,23 @@
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearLoginCacheToolStripMenuItem,
             this.aboutUsToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
+            // clearLoginCacheToolStripMenuItem
+            // 
+            this.clearLoginCacheToolStripMenuItem.Name = "clearLoginCacheToolStripMenuItem";
+            this.clearLoginCacheToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.clearLoginCacheToolStripMenuItem.Text = "Clear Login Cache";
+            this.clearLoginCacheToolStripMenuItem.Click += new System.EventHandler(this.ClearLoginCacheToolStripMenuItem_Click);
+            // 
             // aboutUsToolStripMenuItem
             // 
             this.aboutUsToolStripMenuItem.Name = "aboutUsToolStripMenuItem";
-            this.aboutUsToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.aboutUsToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.aboutUsToolStripMenuItem.Text = "About Us";
             // 
             // progressBar1
@@ -376,9 +411,9 @@
             // 
             // linkLabel1
             // 
-            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(112, 673);
+            this.linkLabel1.Location = new System.Drawing.Point(597, 631);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(67, 13);
             this.linkLabel1.TabIndex = 16;
@@ -404,7 +439,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(1044, 361);
+            this.label4.Location = new System.Drawing.Point(813, 154);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(99, 13);
             this.label4.TabIndex = 19;
@@ -414,7 +449,7 @@
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(1158, 361);
+            this.label5.Location = new System.Drawing.Point(813, 302);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(106, 13);
             this.label5.TabIndex = 20;
@@ -424,7 +459,7 @@
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(1044, 446);
+            this.label6.Location = new System.Drawing.Point(816, 227);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(101, 13);
             this.label6.TabIndex = 21;
@@ -434,7 +469,7 @@
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(1158, 446);
+            this.label7.Location = new System.Drawing.Point(813, 376);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(110, 13);
             this.label7.TabIndex = 22;
@@ -444,18 +479,19 @@
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(1044, 524);
+            this.label8.Location = new System.Drawing.Point(813, 452);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(95, 13);
             this.label8.TabIndex = 23;
             this.label8.Text = "Auto Block People";
+            this.label8.Visible = false;
             // 
             // label9
             // 
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(1044, 279);
+            this.label9.Location = new System.Drawing.Point(3, 204);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(164, 13);
             this.label9.TabIndex = 24;
@@ -471,21 +507,11 @@
             // 
             this.PostlistBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.PostlistBox.FormattingEnabled = true;
-            this.PostlistBox.Location = new System.Drawing.Point(1047, 159);
+            this.PostlistBox.Location = new System.Drawing.Point(6, 30);
             this.PostlistBox.Name = "PostlistBox";
-            this.PostlistBox.Size = new System.Drawing.Size(221, 108);
+            this.PostlistBox.Size = new System.Drawing.Size(221, 173);
             this.PostlistBox.TabIndex = 25;
             this.PostlistBox.SelectedIndexChanged += new System.EventHandler(this.PostlistBox_SelectedIndexChanged);
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(1044, 135);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(47, 13);
-            this.label3.TabIndex = 26;
-            this.label3.Text = "Post List";
             // 
             // btnAddMessage
             // 
@@ -493,7 +519,7 @@
             this.btnAddMessage.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
             this.btnAddMessage.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.btnAddMessage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddMessage.Location = new System.Drawing.Point(1241, 307);
+            this.btnAddMessage.Location = new System.Drawing.Point(6, 279);
             this.btnAddMessage.Margin = new System.Windows.Forms.Padding(0);
             this.btnAddMessage.Name = "btnAddMessage";
             this.btnAddMessage.Size = new System.Drawing.Size(45, 35);
@@ -504,9 +530,9 @@
             // 
             // HideAttachmentCheckBox
             // 
-            this.HideAttachmentCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.HideAttachmentCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.HideAttachmentCheckBox.AutoSize = true;
-            this.HideAttachmentCheckBox.Location = new System.Drawing.Point(633, 629);
+            this.HideAttachmentCheckBox.Location = new System.Drawing.Point(817, 542);
             this.HideAttachmentCheckBox.Name = "HideAttachmentCheckBox";
             this.HideAttachmentCheckBox.Size = new System.Drawing.Size(110, 17);
             this.HideAttachmentCheckBox.TabIndex = 30;
@@ -515,9 +541,9 @@
             // 
             // HideLinkCheckBox
             // 
-            this.HideLinkCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.HideLinkCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.HideLinkCheckBox.AutoSize = true;
-            this.HideLinkCheckBox.Location = new System.Drawing.Point(749, 629);
+            this.HideLinkCheckBox.Location = new System.Drawing.Point(816, 565);
             this.HideLinkCheckBox.Name = "HideLinkCheckBox";
             this.HideLinkCheckBox.Size = new System.Drawing.Size(76, 17);
             this.HideLinkCheckBox.TabIndex = 31;
@@ -526,52 +552,88 @@
             // 
             // labelStatus
             // 
-            this.labelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.labelStatus.AutoSize = true;
             this.labelStatus.ForeColor = System.Drawing.Color.Lime;
-            this.labelStatus.Location = new System.Drawing.Point(211, 673);
+            this.labelStatus.Location = new System.Drawing.Point(715, 631);
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(95, 13);
             this.labelStatus.TabIndex = 32;
             this.labelStatus.Text = "Status: Connected";
-            this.labelStatus.Click += new System.EventHandler(this.labelStatus_Click);
+            this.labelStatus.Click += new System.EventHandler(this.LabelStatus_Click);
             // 
-            // DeleteLinksCheckBox
+            // DeleteLinkCheckBox
             // 
-            this.DeleteLinksCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.DeleteLinksCheckBox.AutoSize = true;
-            this.DeleteLinksCheckBox.Location = new System.Drawing.Point(956, 629);
-            this.DeleteLinksCheckBox.Name = "DeleteLinksCheckBox";
-            this.DeleteLinksCheckBox.Size = new System.Drawing.Size(85, 17);
-            this.DeleteLinksCheckBox.TabIndex = 34;
-            this.DeleteLinksCheckBox.Text = "Delete Links";
-            this.DeleteLinksCheckBox.UseVisualStyleBackColor = true;
+            this.DeleteLinkCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.DeleteLinkCheckBox.AutoSize = true;
+            this.DeleteLinkCheckBox.Location = new System.Drawing.Point(816, 611);
+            this.DeleteLinkCheckBox.Name = "DeleteLinkCheckBox";
+            this.DeleteLinkCheckBox.Size = new System.Drawing.Size(85, 17);
+            this.DeleteLinkCheckBox.TabIndex = 34;
+            this.DeleteLinkCheckBox.Text = "Delete Links";
+            this.DeleteLinkCheckBox.UseVisualStyleBackColor = true;
             // 
             // DeleteAttachmentCheckBox
             // 
-            this.DeleteAttachmentCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.DeleteAttachmentCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.DeleteAttachmentCheckBox.AutoSize = true;
-            this.DeleteAttachmentCheckBox.Location = new System.Drawing.Point(831, 629);
+            this.DeleteAttachmentCheckBox.Location = new System.Drawing.Point(817, 588);
             this.DeleteAttachmentCheckBox.Name = "DeleteAttachmentCheckBox";
             this.DeleteAttachmentCheckBox.Size = new System.Drawing.Size(119, 17);
             this.DeleteAttachmentCheckBox.TabIndex = 33;
             this.DeleteAttachmentCheckBox.Text = "Delete Attachments";
             this.DeleteAttachmentCheckBox.UseVisualStyleBackColor = true;
             // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(819, 37);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(71, 13);
+            this.label10.TabIndex = 35;
+            this.label10.Text = "List of Pages:";
+            // 
+            // SendinrepliescheckBox
+            // 
+            this.SendinrepliescheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.SendinrepliescheckBox.AutoSize = true;
+            this.SendinrepliescheckBox.Location = new System.Drawing.Point(132, 278);
+            this.SendinrepliescheckBox.Name = "SendinrepliescheckBox";
+            this.SendinrepliescheckBox.Size = new System.Drawing.Size(95, 17);
+            this.SendinrepliescheckBox.TabIndex = 36;
+            this.SendinrepliescheckBox.Text = "Send in replies";
+            this.SendinrepliescheckBox.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.PostlistBox);
+            this.groupBox1.Controls.Add(this.AutoSendMessageBox);
+            this.groupBox1.Controls.Add(this.SendinrepliescheckBox);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.btnAddMessage);
+            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupBox1.Location = new System.Drawing.Point(1037, 37);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(252, 336);
+            this.groupBox1.TabIndex = 37;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "PostBox";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1289, 694);
-            this.Controls.Add(this.DeleteLinksCheckBox);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.DeleteLinkCheckBox);
             this.Controls.Add(this.DeleteAttachmentCheckBox);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.HideLinkCheckBox);
             this.Controls.Add(this.HideAttachmentCheckBox);
-            this.Controls.Add(this.btnAddMessage);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.PostlistBox);
-            this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -584,7 +646,6 @@
             this.Controls.Add(this.btnRun);
             this.Controls.Add(this.btnFBLogin);
             this.Controls.Add(this.textBox8);
-            this.Controls.Add(this.AutoSendMessageBox);
             this.Controls.Add(this.AutoBlockBox);
             this.Controls.Add(this.AutoDeleteBox);
             this.Controls.Add(this.AutoHideBox);
@@ -602,6 +663,8 @@
             this.contextMenuStrip1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -654,13 +717,16 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ListBox PostlistBox;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnAddMessage;
         private System.Windows.Forms.CheckBox HideAttachmentCheckBox;
         private System.Windows.Forms.CheckBox HideLinkCheckBox;
         private System.Windows.Forms.Label labelStatus;
-        private System.Windows.Forms.CheckBox DeleteLinksCheckBox;
+        private System.Windows.Forms.ToolStripMenuItem clearLoginCacheToolStripMenuItem;
+        private System.Windows.Forms.CheckBox DeleteLinkCheckBox;
         private System.Windows.Forms.CheckBox DeleteAttachmentCheckBox;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.CheckBox SendinrepliescheckBox;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 

@@ -27,3 +27,61 @@ C:\Users\imtiyaz\source\repos\FacebookPageCommentManager\FacebookPageCommentMana
 C:\Users\imtiyaz\source\repos\FacebookPageCommentManager\FacebookPageCommentManager\bin\Debug\MongoDB.Driver.xml
 C:\Users\imtiyaz\source\repos\FacebookPageCommentManager\FacebookPageCommentManager\bin\Debug\MongoDB.Driver.Core.xml
 C:\Users\imtiyaz\source\repos\FacebookPageCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.ConnectionMonitor.resources
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\FacebookPageCommentManager.exe.config
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\FacebookPageCommentManager.exe.manifest
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\FacebookPageCommentManager.application
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\FacebookPageCommentManager.exe
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\FacebookPageCommentManager.pdb
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\DnsClient.dll
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\MongoDB.Bson.dll
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\MongoDB.Driver.Core.dll
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\MongoDB.Driver.dll
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\System.Buffers.dll
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\Tulpep.NotificationWindow.dll
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\DnsClient.xml
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\MongoDB.Bson.xml
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\MongoDB.Driver.xml
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\MongoDB.Driver.Core.xml
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.CommentsScrapperForm.resources
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.ConnectionMonitor.resources
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageMessegingApp.FacebookLoginDialog.resources
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.Form1.resources
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.Properties.Resources.resources
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.csproj.GenerateResource.cache
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.csproj.CoreCompileInputs.cache
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.exe.manifest
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.application
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.csproj.CopyComplete
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.exe
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.pdb
+E:\app\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.csprojAssemblyReference.cache
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\FacebookPageCommentManager.exe.config
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\FacebookPageCommentManager.exe.manifest
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\FacebookPageCommentManager.application
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\FacebookPageCommentManager.exe
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\FacebookPageCommentManager.pdb
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\DnsClient.dll
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\MongoDB.Bson.dll
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\MongoDB.Driver.Core.dll
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\MongoDB.Driver.dll
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\System.Buffers.dll
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\Tulpep.NotificationWindow.dll
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\DnsClient.xml
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\MongoDB.Bson.xml
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\MongoDB.Driver.xml
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\bin\Debug\MongoDB.Driver.Core.xml
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.csprojAssemblyReference.cache
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.CommentsScrapperForm.resources
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.ConnectionMonitor.resources
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageMessegingApp.FacebookLoginDialog.resources
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.Form1.resources
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.Properties.Resources.resources
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.csproj.GenerateResource.cache
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.csproj.CoreCompileInputs.cache
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.exe.manifest
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.application
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.csproj.CopyComplete
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.exe
+E:\app\TakeOut2.O Resource folder\2019\Imtiaz\UpdatedCommentManager\FacebookPageCommentManager\obj\Debug\FacebookPageCommentManager.pdb

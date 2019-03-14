@@ -19,5 +19,7 @@ namespace FacebookPageCommentManager.DataModels
         public string inbox { get; set; }
         public string postlink { get; set; }
         public string canreply { get; set; }
+        public bool HaveAttachment { get; set; }
+        public string fromid { get; set; }
     }
 }

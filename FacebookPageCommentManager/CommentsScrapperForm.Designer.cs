@@ -129,7 +129,7 @@
             // 
             this.replyToolStripMenuItem.Name = "replyToolStripMenuItem";
             resources.ApplyResources(this.replyToolStripMenuItem, "replyToolStripMenuItem");
-            this.replyToolStripMenuItem.Click += new System.EventHandler(this.replyToolStripMenuItem_Click);
+            this.replyToolStripMenuItem.Click += new System.EventHandler(this.ReplyToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 

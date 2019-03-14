@@ -66,14 +66,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FacebookPageCommentManager.exe" size="310184">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FacebookPageCommentManager.exe" size="311208">
       <assemblyIdentity name="FacebookPageCommentManager" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>8xYsz/7k2+Un84IHQmuAjnonecKKKKZBcbrxW7yCNb8=</dsig:DigestValue>
+        <dsig:DigestValue>iIaUgiOjwfPIWXQjnnicSFpk6WpecBJ1eXo9xT1gwKk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

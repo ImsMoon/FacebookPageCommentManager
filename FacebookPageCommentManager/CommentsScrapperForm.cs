@@ -511,7 +511,7 @@ namespace FacebookPageCommentManager
             }
         }
 
-        public static string ShowDialog(string name, string title, string txtboxtxt)
+        public static Tuple<string,string> ShowDialog(string name, string title, string txtboxtxt)
         {
             Form prompt = new Form();
             prompt.MaximizeBox = false;
@@ -520,7 +520,7 @@ namespace FacebookPageCommentManager
             prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
 
             prompt.Width = 441;
-            prompt.Height = 276;
+            prompt.Height = 300;
             prompt.Text = title;
 
             Button ok = new Button() { Text = "Ok", Left = 338, Top = 16 };
@@ -532,16 +532,21 @@ namespace FacebookPageCommentManager
 
             Label textLabel = new Label() { Left = 50, Top = 20, Text = name };
             TextBox inputBox = new TextBox() { Left = 20, Top = 75, Width = 390, Height = 147 };
+            TextBox TimeInputBox = new TextBox() { Left = 20, Top = 225, Width = 70, Height = 14 };
+
             inputBox.Multiline = true;
             inputBox.Text = txtboxtxt;
+            TimeInputBox.Text = "3";
 
             ok.Click += (sender, e) => { prompt.Close(); };
             clear.Click += (sender, e) => { inputBox.Clear(); };
 
             prompt.Controls.Add(textLabel);
             prompt.Controls.Add(inputBox);
+            prompt.Controls.Add(TimeInputBox);
             prompt.ShowDialog();
-            return (string)inputBox.Text.ToString();
+            var Tuple = new Tuple<string, string>(inputBox.Text, TimeInputBox.Text);
+            return Tuple;
         }
 
 
@@ -590,64 +595,71 @@ namespace FacebookPageCommentManager
             }
         }
 
-        private void replyToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ReplyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             btnReply.Text = "Stop";
-            string replydata = ShowDialog("Please Enter Your Reply", " Reply", "");
+            var replydata = ShowDialog("Please Enter Your Reply", " Reply", "");
             progressBar1.Show();
-            var fb = new FacebookClient();
-            fb.AccessToken = CurrentpageAccesstoken;
-            int index = 0;
-            int countFailure = 0;
-            try
+            if (replydata.Item1 != "")
             {
-                for (int i = 0; i <= dataGridView1.SelectedRows.Count - 1; i++)
+                var fb = new FacebookClient();
+                fb.AccessToken = CurrentpageAccesstoken;
+                int index = 0;
+                int countFailure = 0;
+                try
                 {
-                    if(btnReply.Text =="Reply")
+                    for (int i = 0; i <= dataGridView1.SelectedRows.Count - 1; i++)
                     {
-                        break;
+                        if (btnReply.Text == "Reply")
+                        {
+                            break;
+                        }
+                        try
+                        {
+                            index = dataGridView1.SelectedRows[i].Index;
+                            string id = dataGridView1.Rows[index].Cells[11].Value.ToString();
+                            var msgbody = new Dictionary<string, object>
+                            {
+                                { "message",replydata.Item1}
+                            };
+                            var result = fb.Post(id + "/comments", msgbody);
+                            dataGridView1.Rows[index].DefaultCellStyle.BackColor = Color.Aqua;
+
+                            if (replydata.Item2 != "")
+                                Thread.Sleep(Convert.ToInt16(replydata.Item2) * 1000);
+                            else
+                                Thread.Sleep(4000);
+                        }
+                        catch (Exception)
+                        {
+                            countFailure++;
+                            dataGridView1.Rows[index].DefaultCellStyle.BackColor = Color.PaleVioletRed;
+                            Thread.Sleep(4000);
+                            continue;
+                        }
                     }
                     try
                     {
-                        index = dataGridView1.SelectedRows[i].Index;
-                        string id = dataGridView1.Rows[index].Cells[11].Value.ToString();
-                        var msgbody = new Dictionary<string, object>
-                            {
-                                { "message",replydata}
-                            };
-                        var result = fb.Post(id + "/comments", msgbody);
-                        dataGridView1.Rows[index].DefaultCellStyle.BackColor = Color.Aqua;
-                        Thread.Sleep(4000);// 5 nov 2018
+                        // 5 nov 2018
+                        string path = Assembly.GetExecutingAssembly().Location;
+                        path = Path.GetDirectoryName(path);
+                        path = Path.Combine(path, "notifyTune.wav");
+                        System.Media.SoundPlayer player = new System.Media.SoundPlayer(path);
+
+                        //player.SoundLocation = @"C:\Users\imtiyaz\Downloads\Music\notifyTune.wav";
+                        player.Play();
                     }
                     catch (Exception)
                     {
-                        countFailure++;
-                        dataGridView1.Rows[index].DefaultCellStyle.BackColor = Color.PaleVioletRed;
-                        Thread.Sleep(4000);
-                        continue;
+
                     }
-                }
-                try
-                {
-                    // 5 nov 2018
-                    string path = Assembly.GetExecutingAssembly().Location;
-                    path = Path.GetDirectoryName(path);
-                    path = Path.Combine(path, "notifyTune.wav");
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(path);
-
-                    //player.SoundLocation = @"C:\Users\imtiyaz\Downloads\Music\notifyTune.wav";
-                    player.Play();
-                }
-                catch(Exception)
-                {
+                    MessageBox.Show(dataGridView1.SelectedRows.Count + " out of " + (dataGridView1.SelectedRows.Count - countFailure) + " comments replied Successfully");
 
                 }
-                MessageBox.Show(dataGridView1.SelectedRows.Count + " out of " + (dataGridView1.SelectedRows.Count - countFailure) + " comments replied Successfully");
-               
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Comments not send because "+ex.Message);
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Comments not send because " + ex.Message);
+                }
             }
             progressBar1.Hide();
         }
@@ -763,65 +775,73 @@ namespace FacebookPageCommentManager
         private async void sendMessageToolStripMenuItem_ClickAsync(object sender, EventArgs e)
         {
             progressBar1.Show();
-            string replydata = ShowDialog("Please Enter Your Message", " Message", "");
-            var fb = new FacebookClient();
-            fb.AccessToken = CurrentpageAccesstoken;
-            int sentcount = 1;
-            int index = 0;
-            int countFailure = 0;
-            try
+            var replydata = ShowDialog("Please Enter Your Message", " Message", "");
+            if (replydata.Item1 != "")
             {
-                string[] sendFailure = new string[dataGridView1.SelectedRows.Count];
-                for (int i = 0; i <= dataGridView1.SelectedRows.Count - 1; i++)
-                {
-                    try
-                    {
-                        index = dataGridView1.SelectedRows[i].Index;
-                        string id = dataGridView1.Rows[index].Cells[11].Value.ToString();
-                        var msgbody = new Dictionary<string, object>
-                        {
-                            { "message",replydata}
-                        };
-                        await fb.PostTaskAsync(id + "/private_replies", msgbody);
-                        dataGridView1.Rows[index].DefaultCellStyle.BackColor = Color.Aqua;
-                        totalCommentLabel.Text = sentcount+ "/"+ dataGridView1.SelectedRows.Count+" Sending...";
-                        sentcount++;
-                        Thread.Sleep(4000);
-                    }catch(Exception)
-                    {
-                        dataGridView1.Rows[index].DefaultCellStyle.BackColor = Color.PaleVioletRed;
-                        sendFailure[countFailure] = dataGridView1.Rows[index].Cells[0].Value.ToString();
-                        countFailure++;
-                        Thread.Sleep(4000);
-                        continue;
-                    }
-
-                }
+                var fb = new FacebookClient();
+                fb.AccessToken = CurrentpageAccesstoken;
+                int sentcount = 1;
+                int index = 0;
+                int countFailure = 0;
                 try
                 {
-                    string path = Assembly.GetExecutingAssembly().Location;
-                    path = Path.GetDirectoryName(path);
-                    path = Path.Combine(path, "notifyTune.wav");
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(path);
+                    string[] sendFailure = new string[dataGridView1.SelectedRows.Count];
+                    for (int i = 0; i <= dataGridView1.SelectedRows.Count - 1; i++)
+                    {
+                        try
+                        {
+                            index = dataGridView1.SelectedRows[i].Index;
+                            string id = dataGridView1.Rows[index].Cells[11].Value.ToString();
+                            var msgbody = new Dictionary<string, object>
+                            {
+                                { "message",replydata.Item1}
+                            };
+                            await fb.PostTaskAsync(id + "/private_replies", msgbody);
+                            dataGridView1.Rows[index].DefaultCellStyle.BackColor = Color.Aqua;
+                            totalCommentLabel.Text = sentcount + "/" + dataGridView1.SelectedRows.Count + " Sending...";
+                            sentcount++;
+                            if (replydata.Item2 != "")
+                                Thread.Sleep(Convert.ToInt16(replydata.Item2)*1000);
+                            else
+                                Thread.Sleep(4000);
+                        }
+                        catch (Exception)
+                        {
+                            dataGridView1.Rows[index].DefaultCellStyle.BackColor = Color.PaleVioletRed;
+                            sendFailure[countFailure] = dataGridView1.Rows[index].Cells[0].Value.ToString();
+                            countFailure++;
+                            Thread.Sleep(4000);
+                            continue;
+                        }
 
-                    //player.SoundLocation = @"C:\Users\imtiyaz\Downloads\Music\notifyTune.wav";
-                    player.Play();
-                }catch(Exception)
-                {
+                    }
+                    try
+                    {
+                        string path = Assembly.GetExecutingAssembly().Location;
+                        path = Path.GetDirectoryName(path);
+                        path = Path.Combine(path, "notifyTune.wav");
+                        System.Media.SoundPlayer player = new System.Media.SoundPlayer(path);
 
+                        //player.SoundLocation = @"C:\Users\imtiyaz\Downloads\Music\notifyTune.wav";
+                        player.Play();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                    MessageBox.Show(dataGridView1.SelectedRows.Count + " out of " + (dataGridView1.SelectedRows.Count - countFailure) + "  Sends Message Successfully");
+                    if (countFailure > 1)
+                    {
+                        string toDisplay = string.Join(Environment.NewLine, sendFailure);
+                        MessageBox.Show("Can not sent messages to these Users" + "\n\n" + toDisplay);
+                    }
                 }
-                MessageBox.Show(dataGridView1.SelectedRows.Count + " out of " + (dataGridView1.SelectedRows.Count - countFailure) + "  Sends Message Successfully");
-                if (countFailure > 1)
+                catch (Exception ex)
                 {
-                    string toDisplay = string.Join(Environment.NewLine, sendFailure);
-                    MessageBox.Show("Can not sent messages to these Users" + "\n\n" + toDisplay);
+                    MessageBox.Show(ex.Message);
                 }
+                totalCommentLabel.Text = loadedCommentsCount + " Comments Found";
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            totalCommentLabel.Text = loadedCommentsCount + " Comments Found";
             progressBar1.Hide();
         }
 
